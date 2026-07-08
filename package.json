@@ -2,8 +2,9 @@
   "scripts": {
     "test": "npm run test:ci",
     "build:core": "tsc --project packages/cross-csl-core/tsconfig.build.json",
-    "test:ci": "npm run build:core && npm run test:nodejs && npm run test:browser",
+    "test:ci": "npm run build:core && npm run test:nodejs && npm run typecheck:browser && npm run test:browser",
     "test:nodejs": "npm test --workspace packages/cross-csl-nodejs",
+    "typecheck:browser": "npm run typecheck --workspace packages/cross-csl-browser",
     "test:browser": "npm run test:ci --workspace packages/cross-csl-browser",
     "format": "prettier --config .prettierrc packages/**/*.ts --write",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
@@ -20,7 +21,7 @@
   ],
   "devDependencies": {
     "@types/node": "^16.9.1",
-    "@types/sinon": "^10.0.2",
+    "@types/sinon": "10.0.2",
     "@types/yargs": "^17.0.5",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
