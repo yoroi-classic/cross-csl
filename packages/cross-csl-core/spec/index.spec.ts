@@ -23,6 +23,71 @@ const BECH32_ADDRESS_V2 =
   'addr_test1qqhchrw4umcrf90ew5ep85zefj9724c5jcfg6kp667qau789d6z307gnggrp3hgye75yzgh5q0w6unkqnvfxjfu7vxlswtaxme';
 const NATIVE_SCRIPT =
   '8200581ce541b3cf3eee5b50940cb19fae22d4949b9cb93cb4e476f47e7e8787';
+const PUBLIC_API_METADATA_JSON = JSON.stringify({
+  map: [
+    { k: { string: 'purpose' }, v: { string: 'public-api' } },
+    { k: { string: 'payload' }, v: { bytes: '000102ff' } }
+  ]
+});
+const PUBLIC_API_ADDRESS_HEX =
+  '002f8b8dd5e6f03495f9753213d0594c8be5571496128d583ad781de78e56e8517f913420618dd04cfa84122f403ddae4ec09b1269279e61bf';
+const PUBLIC_API_METADATA_HEX =
+  'a267707572706f73656a7075626c69632d617069677061796c6f616444000102ff';
+const PUBLIC_API_AUXILIARY_DATA_HASH =
+  '20a7e88f626f365f024170b185fc09a990d87aa5e4d4b5660ec47972f664fe12';
+const PUBLIC_API_TRANSACTION_OUTPUT_HEX =
+  '825839002f8b8dd5e6f03495f9753213d0594c8be5571496128d583ad781de78e56e8517f913420618dd04cfa84122f403ddae4ec09b1269279e61bf1a0012d687';
+
+const toHex = (bytes: Uint8Array): string => Buffer.from(bytes).toString('hex');
+
+export const expectPublicApiFixtureOutputs = async (
+  wasm: WasmModuleProxy
+): Promise<void> => {
+  const address = await wasm.Address.fromBech32(BECH32_ADDRESS_V2);
+  expect(await address.toHex()).to.equal(PUBLIC_API_ADDRESS_HEX);
+  expect(await address.toBech32(undefined)).to.equal(BECH32_ADDRESS_V2);
+  expect(await address.networkId()).to.equal(0);
+
+  const metadata = await wasm.encodeJsonStrToMetadatum(
+    PUBLIC_API_METADATA_JSON,
+    wasm.MetadataJsonSchema.DetailedSchema
+  );
+  expect(await metadata.toHex()).to.equal(PUBLIC_API_METADATA_HEX);
+  expect(
+    await wasm.decodeMetadatumToJsonStr(
+      metadata,
+      wasm.MetadataJsonSchema.DetailedSchema
+    )
+  ).to.equal(PUBLIC_API_METADATA_JSON);
+
+  const auxiliaryData = await wasm.AuxiliaryData.new();
+  const generalMetadata = await wasm.GeneralTransactionMetadata.new();
+  await generalMetadata.insert(await wasm.BigNum.fromStr('674'), metadata);
+  await auxiliaryData.setMetadata(generalMetadata);
+  const auxiliaryDataHash = await wasm.hashAuxiliaryData(auxiliaryData);
+  expect(await auxiliaryDataHash.toHex()).to.equal(
+    PUBLIC_API_AUXILIARY_DATA_HASH
+  );
+
+  const output = await wasm.TransactionOutput.new(
+    address,
+    await wasm.Value.new(await wasm.BigNum.fromStr('1234567'))
+  );
+  expect(toHex(await output.toBytes())).to.equal(
+    PUBLIC_API_TRANSACTION_OUTPUT_HEX
+  );
+
+  const roundTripOutput = await wasm.TransactionOutput.fromHex(
+    PUBLIC_API_TRANSACTION_OUTPUT_HEX
+  );
+  const roundTripAddress = await roundTripOutput.address();
+  expect(await roundTripAddress.toBech32(undefined)).to.equal(
+    BECH32_ADDRESS_V2
+  );
+  const roundTripAmount = await roundTripOutput.amount();
+  const roundTripCoin = await roundTripAmount.coin();
+  expect(await roundTripCoin.toStr()).to.equal('1234567');
+};
 
 export const setupTests = (
   wasm: WasmModuleProxy,
@@ -62,6 +127,12 @@ export const setupTests = (
     const stakePrivateKey = wasm.PrivateKey.fromNormalBytes(
       Buffer.from(PRIVATE_KEY, 'hex')
     );
+
+    describe('Public API fixtures', () => {
+      it('preserves conversion and serialization outputs', async () => {
+        await expectPublicApiFixtureOutputs(wasm);
+      });
+    });
 
     describe('BigNum', () => {
       if (suiteName !== 'Cross CSL Mobile') {

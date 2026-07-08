@@ -1,6 +1,10 @@
 {
   "scripts": {
-    "test": "mocha --watch",
+    "test": "npm run test:ci",
+    "build:core": "tsc --project packages/cross-csl-core/tsconfig.build.json",
+    "test:ci": "npm run build:core && npm run test:nodejs && npm run test:browser",
+    "test:nodejs": "npm test --workspace packages/cross-csl-nodejs",
+    "test:browser": "npm run test:ci --workspace packages/cross-csl-browser",
     "format": "prettier --config .prettierrc packages/**/*.ts --write",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix"

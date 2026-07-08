@@ -7,7 +7,8 @@
     "dist/**"
   ],
   "scripts": {
-    "test": "yarn karma start",
+    "test": "karma start",
+    "test:ci": "karma start --single-run --browsers ChromeHeadlessCI",
     "build": "yarn install && ../../node_modules/typescript/bin/tsc --project tsconfig.build.json",
     "clean": "rm -rf ./dist",
     "gen-flow-defs": "node ../../generate-flow.js",

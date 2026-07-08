@@ -1,13 +1,12 @@
-import { setupTests } from '../../cross-csl-core/spec/index.spec';
+import { expect } from 'chai';
+import { expectPublicApiFixtureOutputs } from '../../cross-csl-core/spec/index.spec';
 
-/*
-  this is kinda hacky, but we need to wrap `setupTests` into a `describe(() => it() => {...})`,
-  otherwise the test suite won't be detected by Karma
-*/
-describe('Startup', () => {
-  it('should bootstrap', async () => {
-    const { init } = await import('../src');
+describe('Cross CSL Browser public API', () => {
+  it('loads the browser entrypoint and preserves fixture outputs', async () => {
+    const { init, WasmModuleProxy } = await import('../src');
+    expect(init).to.be.a('function');
+    expect(WasmModuleProxy).to.be.a('function');
 
-    setupTests(init('global') as any, 'Cross CSL Browser');
+    await expectPublicApiFixtureOutputs(init('public-api') as any);
   });
 });

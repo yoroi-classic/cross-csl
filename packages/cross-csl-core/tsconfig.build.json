@@ -4,7 +4,8 @@
     "target": "ES6",
     "declaration": true,
     "strict": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "skipLibCheck": true
   },
   "exclude": [
     "dist",
