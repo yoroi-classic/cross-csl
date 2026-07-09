@@ -1,21 +1,32 @@
 {
+  "name": "cross-csl",
+  "private": true,
+  "packageManager": "npm@10.9.7",
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10"
+  },
   "scripts": {
     "test": "npm run test:ci",
-    "build:core": "tsc --project packages/cross-csl-core/tsconfig.build.json",
-    "test:ci": "npm run build:core && npm run test:nodejs && npm run typecheck:browser && npm run test:browser",
+    "clean": "npm run clean --workspaces --if-present",
+    "build": "npm run build:core && npm run build:nodejs && npm run build:browser && npm run build:mobile",
+    "build:core": "npm run build --workspace packages/cross-csl-core",
+    "build:nodejs": "npm run build --workspace packages/cross-csl-nodejs",
+    "build:browser": "npm run build --workspace packages/cross-csl-browser",
+    "build:mobile": "npm run build --workspace packages/cross-csl-mobile",
+    "test:ci": "npm run build:core && npm run build:nodejs && npm run test:nodejs && npm run typecheck:browser && npm run test:browser && npm run build:browser && npm run build:mobile",
     "test:nodejs": "npm test --workspace packages/cross-csl-nodejs",
     "typecheck:browser": "npm run typecheck --workspace packages/cross-csl-browser",
     "test:browser": "npm run test:ci --workspace packages/cross-csl-browser",
     "format": "prettier --config .prettierrc packages/**/*.ts --write",
-    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "bech32": "^2.0.0",
     "bignumber.js": "^9.0.1",
     "yargs": "^17.2.1"
   },
-  "private": true,
   "workspaces": [
     "packages/*"
   ],
