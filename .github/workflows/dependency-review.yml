@@ -5,7 +5,10 @@ on:
     paths:
       - "package.json"
       - "package-lock.json"
+      - "yarn.lock"
       - "packages/cross-csl-*/package.json"
+      - "packages/cross-csl-*/package-lock.json"
+      - "packages/cross-csl-*/yarn.lock"
       - "test-app-mobile/package.json"
       - "test-app-mobile/package-lock.json"
       - "test-app-mobile/yarn.lock"

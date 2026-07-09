@@ -10,7 +10,7 @@
     "build": "tsc --project tsconfig.json",
     "clean": "rm -rf ./dist",
     "gen-flow-defs": "node ../../generate-flow.js",
-    "rebuild": "npm run clean && npm run build && npm run gen-flow-defs",
+    "rebuild": "npm --prefix ../.. run build:core && npm run clean && npm run build && npm run gen-flow-defs",
     "pack-tar:dry": "npm run rebuild && npm pack --dry-run",
     "pack-tar": "npm run rebuild && npm pack",
     "publish:beta": "npm publish --tag beta --access public",

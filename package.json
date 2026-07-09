@@ -9,7 +9,7 @@
   "scripts": {
     "test": "npm run test:ci",
     "clean": "npm run clean --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
+    "build": "npm run build:core && npm run build:nodejs && npm run build:browser && npm run build:mobile",
     "build:core": "npm run build --workspace packages/cross-csl-core",
     "build:nodejs": "npm run build --workspace packages/cross-csl-nodejs",
     "build:browser": "npm run build --workspace packages/cross-csl-browser",
