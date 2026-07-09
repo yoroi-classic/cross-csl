@@ -1,9 +1,25 @@
 const path = require('path')
 const os = require('os')
+const fs = require('fs')
 
 const webpackConfig = require('./webpack.dev.config')
 
 const packageDir = 'node_modules/@emurgo/cardano-serialization-lib-browser'
+const chromeCandidates = [
+  '/usr/bin/google-chrome',
+  '/usr/bin/google-chrome-stable',
+  '/usr/bin/chromium-browser',
+  '/usr/bin/chromium'
+]
+
+if (!process.env.CHROME_BIN) {
+  const chromeBin = chromeCandidates.find((candidate) =>
+    fs.existsSync(candidate)
+  )
+  if (chromeBin) {
+    process.env.CHROME_BIN = chromeBin
+  }
+}
 
 /*
   It seems Karma is currently unable to serve WASM files,
@@ -73,6 +89,18 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['ChromeHeadless'],
+
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-features=Vulkan',
+          '--disable-gpu'
+        ]
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -17,7 +17,8 @@ module.exports = {
         // We use a different tsconfig here because we want to compile towards ES6,
         // but we need to use ESNext here because of the dynamic imports (see spec/index.spec.ts).
         options: {
-          configFile: 'tsconfig.tests.json'
+          configFile: 'tsconfig.tests.json',
+          transpileOnly: true
         }
       }],
       exclude: /node_modules/
