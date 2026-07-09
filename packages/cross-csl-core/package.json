@@ -9,16 +9,16 @@
   "scripts": {
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'",
     "test:watch": "mocha --watch",
-    "build": "yarn install && ../../node_modules/typescript/bin/tsc --project tsconfig.build.json",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rm -rf ./dist",
     "gen-flow-defs": "node ../../generate-flow.js",
-    "rebuild": "yarn clean && yarn build && yarn gen-flow-defs",
-    "create-link": "yarn rebuild && yarn link",
-    "pack-tar:dry": "yarn rebuild && npm pack --dry-run",
-    "pack-tar": "yarn rebuild && npm pack",
+    "rebuild": "npm run clean && npm run build && npm run gen-flow-defs",
+    "create-link": "npm run rebuild && npm link",
+    "pack-tar:dry": "npm run rebuild && npm pack --dry-run",
+    "pack-tar": "npm run rebuild && npm pack",
     "publish:beta": "npm publish --tag beta --access public",
     "publish:prod": "npm publish --access public",
-    "release": "yarn rebuild && npm publish --scope=emurgo --access public"
+    "release": "npm run rebuild && npm publish --scope=emurgo --access public"
   },
   "author": "EMURGO",
   "license": "MIT",

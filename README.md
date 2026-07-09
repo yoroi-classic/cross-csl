@@ -1,5 +1,17 @@
 # Cross CSL (cardanos-serialization-lib)
 
+## Maintenance status
+
+This package is in compatibility-maintenance mode while consumers migrate to
+dcSpark cardano-multiplatform-lib. Changes should stay limited to build
+stability, security/toolchain updates, and public API compatibility checks.
+
+## Toolchain
+
+Use Node.js 22 LTS with npm 10 or newer. The root `package-lock.json` is the
+authoritative npm workspace lockfile; do not use Yarn or commit package-local
+lockfiles for the workspace packages.
+
 ## Getting started
 
 Install the core package:
