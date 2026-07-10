@@ -1,7 +1,7 @@
 {
   "name": "@emurgo/cross-csl-browser",
   "version": "8.0.0",
-  "description": "",
+  "description": "Deprecated browser compatibility wrapper; migrate consumers to @dcspark/cardano-multiplatform-lib-browser.",
   "main": "dist/index.js",
   "files": [
     "dist/**"

@@ -1,7 +1,7 @@
 {
   "name": "@emurgo/cross-csl-core",
   "version": "8.0.0",
-  "description": "",
+  "description": "Deprecated cross-csl compatibility contracts; migrate consumers to dcSpark Cardano Multiplatform Lib.",
   "main": "dist/index.js",
   "files": [
     "dist/**"

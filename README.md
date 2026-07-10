@@ -1,10 +1,29 @@
-# Cross CSL (cardanos-serialization-lib)
+# Cross CSL (cardano-serialization-lib)
 
-## Maintenance status
+## Deprecation status
 
-This package is in compatibility-maintenance mode while consumers migrate to
-dcSpark cardano-multiplatform-lib. Changes should stay limited to build
-stability, security/toolchain updates, and public API compatibility checks.
+cross-csl is deprecated in favor of dcSpark Cardano Multiplatform Lib (CML):
+https://github.com/dcSpark/cardano-multiplatform-lib
+
+This repository is kept only as a temporary compatibility facade for existing
+callers while consumers migrate to CML. Do not add new downstream dependencies
+on `@emurgo/cross-csl-*` packages, and do not publish new cross-csl packages as
+a long-term dependency path. Changes should stay limited to build stability,
+security/toolchain updates, and public API compatibility checks.
+
+Verified CML npm packages for migration targets:
+
+- Node.js: `@dcspark/cardano-multiplatform-lib-nodejs`
+- Browser: `@dcspark/cardano-multiplatform-lib-browser`
+
+Both packages expose `cardano_multiplatform_lib.js` with
+`cardano_multiplatform_lib.d.ts` types in the npm metadata. No direct package
+replacement is made in this repository because cross-csl's API wraps CSL through
+its own compatibility contracts.
+
+Issue #2 tracks the CML migration direction. Issue #1's package replacement
+direction is superseded by this deprecation path and should not be used to add a
+new long-term cross-csl dependency chain.
 
 ## Toolchain
 
@@ -12,7 +31,10 @@ Use Node.js 22 LTS with npm 10 or newer. The root `package-lock.json` is the
 authoritative npm workspace lockfile; do not use Yarn or commit package-local
 lockfiles for the workspace packages.
 
-## Getting started
+## Legacy package use
+
+The packages below are for existing compatibility callers only. New work should
+use CML directly.
 
 Install the core package:
 ```
