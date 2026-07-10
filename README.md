@@ -36,6 +36,16 @@ lockfiles for the workspace packages.
 The packages below are for existing compatibility callers only. New work should
 use CML directly.
 
+Package owners should also mark the legacy npm packages deprecated in the
+registry after the replacement path is approved:
+
+```
+npm deprecate @emurgo/cross-csl-core "Deprecated: migrate to dcSpark Cardano Multiplatform Lib (CML)."
+npm deprecate @emurgo/cross-csl-nodejs "Deprecated: migrate to @dcspark/cardano-multiplatform-lib-nodejs."
+npm deprecate @emurgo/cross-csl-browser "Deprecated: migrate to @dcspark/cardano-multiplatform-lib-browser."
+npm deprecate @emurgo/cross-csl-mobile "Deprecated: migrate to a CML-compatible mobile integration."
+```
+
 Install the core package:
 ```
 npm i @emurgo/cross-csl-core
