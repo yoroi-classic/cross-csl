@@ -36,8 +36,9 @@ lockfiles for the workspace packages.
 The packages below are for existing compatibility callers only. New work should
 use CML directly.
 
-Package owners should also mark the legacy npm packages deprecated in the
-registry after the replacement path is approved:
+Required registry deprecation release step: package owners must mark the legacy
+npm packages deprecated in the registry with npm owner credentials. Updating
+package descriptions alone does not create npm install warnings:
 
 ```
 npm deprecate @emurgo/cross-csl-core "Deprecated: migrate to dcSpark Cardano Multiplatform Lib (CML)."
