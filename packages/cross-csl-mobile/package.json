@@ -1,7 +1,7 @@
 {
   "name": "@emurgo/cross-csl-mobile",
   "version": "8.0.0",
-  "description": "",
+  "description": "Deprecated mobile compatibility wrapper; migrate consumers to a CML-compatible mobile integration.",
   "main": "dist/index.js",
   "files": [
     "dist/**"

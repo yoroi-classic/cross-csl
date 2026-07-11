@@ -1,5 +1,6 @@
 {
   "name": "cross-csl",
+  "description": "Deprecated compatibility workspace for CSL wrappers; migrate consumers to dcSpark Cardano Multiplatform Lib.",
   "private": true,
   "packageManager": "npm@10.9.7",
   "engines": {

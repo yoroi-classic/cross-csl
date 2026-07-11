@@ -1,7 +1,7 @@
 {
   "name": "@emurgo/cross-csl-nodejs",
   "version": "8.0.0",
-  "description": "",
+  "description": "Deprecated Node.js compatibility wrapper; migrate consumers to @dcspark/cardano-multiplatform-lib-nodejs.",
   "main": "dist/index.js",
   "scripts": {
     "test": "env TS_NODE_TRANSPILE_ONLY=true TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha -r ts-node/register 'spec/**/*.ts'",
